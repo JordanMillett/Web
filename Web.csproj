@@ -19,5 +19,6 @@
     <Exec Command="dotnet msbuild /t:GenerateStaticWebAssets /p:Configuration=$(Configuration)" />  
   </Target>
   -->
+  
 
 </Project>
