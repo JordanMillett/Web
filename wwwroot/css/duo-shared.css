@@ -3,13 +3,10 @@
 {
     margin-left: auto;
     margin-right: auto;
-    resize: both;
+    /*resize: both;*/
     overflow: hidden;
-    
-    min-width: 400px;
-    min-height: 550px;
-    width: 500px;
-    height: 650px;
+    width: 450px;
+    height: 600px;
 }
 
 /* Rounded unselectable fill screen */
@@ -110,4 +107,12 @@ hr
     border-left: 2px solid #D84848;
     border-right: 2px solid #D84848;
     border-bottom: 4px solid #D84848;
+}
+
+@media only screen and (max-width: 700px) 
+{
+    #mobile-container
+    {
+        width: 100%;
+    }
 }
