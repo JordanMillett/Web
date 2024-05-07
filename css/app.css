@@ -1,0 +1,25 @@
+html, body
+{
+    background-color: #150811;
+    color:white;
+}
+
+ul, ol, td, th
+{
+    color:white;
+}
+
+h1:focus 
+{
+    outline: none;
+}
+
+::-webkit-scrollbar 
+{
+    display: none;
+}
+
+.hidden
+{
+    visibility: hidden;
+}

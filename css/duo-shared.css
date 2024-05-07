@@ -1,0 +1,113 @@
+/* Resizable container */
+#mobile-container
+{
+    margin-left: auto;
+    margin-right: auto;
+    resize: both;
+    overflow: hidden;
+    
+    min-width: 400px;
+    min-height: 550px;
+    width: 500px;
+    height: 650px;
+}
+
+/* Rounded unselectable fill screen */
+#mobile-screen
+{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+    background-color: #131F24;
+    border-radius: 10px;
+    padding: 20px;
+    
+    user-select: none;
+    -webkit-user-drag: none;
+}
+
+/* Makes everything unselectable and standard */
+#mobile-screen > *
+{
+    color: #F2F8FC;
+    font-family: Nunito;
+    
+    user-select: none;
+    -webkit-user-drag: none;
+}
+
+/* Standard Divider */
+hr
+{
+    border-top: 3px solid #37464F;
+}
+
+/* The header phrase at the top of the screen */
+#phrase
+{
+    padding: 15px;
+    padding-bottom: 8px;
+    border: 3px solid #37464F;
+    border-radius: 15px;
+}
+
+#phrase > *
+{
+    text-decoration: underline dotted #37464F;
+}
+
+.word
+{
+    display: inline-block;
+    width: auto;
+    padding: 8px;
+    padding-top: 6px;
+    height: 40px;
+    border: 3px solid #37464F;
+    border-bottom: 4px solid #37464F;
+    border-radius: 10px;
+    margin: 3px;
+    cursor: pointer;
+}
+
+.word-blank
+{
+    background-color: #37464F;
+    color: #37464F;
+}
+
+#bottom-container
+{
+    height: 50px;
+    margin-top: auto;
+}
+
+.button-fill
+{
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: #93D334;
+    border-top: 0px;
+    border-left: 2px solid #77B828;
+    border-right: 2px solid #77B828;
+    border-bottom: 4px solid #77B828;
+    border-radius: 15px;
+}
+
+.button-fill > *
+{
+    color: #131F24;
+    margin: 0;
+    padding: 0;
+}
+
+.button-fill-wrong
+{
+    background-color: #EE5655;
+    border-left: 2px solid #D84848;
+    border-right: 2px solid #D84848;
+    border-bottom: 4px solid #D84848;
+}
