@@ -1,0 +1,15 @@
+.square
+{
+    display:inline-block;
+    width: 150px;
+    padding: 10px;
+    margin: 10px;
+    height: 125px;
+    vertical-align: top;
+}
+
+a
+{
+    color:rgb(0, 208, 255);
+    text-decoration: none;
+}

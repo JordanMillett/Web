@@ -1,0 +1,44 @@
+@page "/projects/form"
+
+<PageTitle>@Title</PageTitle>
+
+<h1>@Title</h1>
+<p>@Description</p>
+
+<!--<input placeholder="Enter text" @bind="@value" @oninput="NewEntry" />
+@value-->
+
+<input maxlength="10" placeholder="Enter text" @bind="@value" @onkeyup="@EnterEntry"/>
+<button class="btn btn-primary" @onclick="CreateNewEntry">Login</button>
+
+@foreach (string S in Submitted)
+{
+    <br>
+    @S
+}
+
+@code
+{
+    public static string Title = "Form";
+    public static string Description = "Testing Data Entry";
+
+    string value = "";
+
+    public List<string> Submitted = new List<string>();
+
+    void EnterEntry(KeyboardEventArgs e)
+    {
+        if (e.Code == "Enter" || e.Code == "NumpadEnter")
+        {
+            CreateNewEntry();
+        }
+    }
+
+    void CreateNewEntry()
+    {
+        if (value == "")
+            return;
+        Submitted.Add(value);
+        value = "";
+    }
+}

@@ -1,0 +1,143 @@
+@page "/projects/misc"
+@attribute [StreamRendering]
+
+<PageTitle>@Title</PageTitle>
+
+<h1>@Title</h1>
+<p>@Description</p>
+
+<p role="status">Current count: @currentCount</p>
+
+<button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
+
+<button class="btn btn-primary" @onclick="Toggle">Toggle</button>
+
+<br><br>
+
+<p role="status">@toggle</p>
+
+@if (toggle)
+{
+    <p>Toggled On</p>
+}else
+{
+    <p>Toggled Off</p>
+}
+
+
+<table class="table">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Temp. (C)</th>
+                <th>Temp. (F)</th>
+                <th>Summary</th>
+            </tr>
+        </thead>
+        <tbody>
+            @if (forecasts != null)
+            {
+            @foreach (var forecast in forecasts)
+            {
+                <tr>
+                    <td>@forecast.Date.ToShortDateString()</td>
+                    <td>@forecast.TemperatureC</td>
+                    <td>@forecast.TemperatureF</td>
+                    <td>@forecast.Summary</td>
+                </tr>
+            }
+            }
+        </tbody>
+    </table>
+
+<!--
+@if (forecasts == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Temp. (C)</th>
+                <th>Temp. (F)</th>
+                <th>Summary</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var forecast in forecasts)
+            {
+                <tr>
+                    <td>@forecast.Date.ToShortDateString()</td>
+                    <td>@forecast.TemperatureC</td>
+                    <td>@forecast.TemperatureF</td>
+                    <td>@forecast.Summary</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}-->
+
+@code
+{
+    private int currentCount = 0;
+
+    private void IncrementCount()
+    {
+        currentCount++;
+    }
+
+
+    public static string Title = "Misc";
+    public static string Description = "Bits of test code and elements.";
+
+    bool toggle = false;
+
+    private WeatherForecast[]? forecasts;
+
+    void Toggle()
+    {
+        //Array.Clear(forecasts);
+        toggle = !toggle;
+        MakeData();
+        //StateHasChanged();
+        //MakeData();
+
+    }
+
+    protected override void OnInitialized()
+    {
+        MakeData();
+    }
+    
+    /*
+    protected override async Task OnInitializedAsync()
+    {
+        // Simulate asynchronous loading to demonstrate streaming rendering
+        await Task.Delay(1500);
+
+        MakeData();
+    }*/
+    
+    void MakeData()
+    {
+        var startDate = DateOnly.FromDateTime(DateTime.Now);
+        var summaries = new[] { "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching" };
+        forecasts = Enumerable.Range(1, 5).Select(index => new WeatherForecast
+        {
+            Date = startDate.AddDays(index),
+            TemperatureC = Random.Shared.Next(-20, 55),
+            Summary = summaries[Random.Shared.Next(summaries.Length)]
+        }).ToArray();
+    }
+
+    private class WeatherForecast
+    {
+        public DateOnly Date { get; set; }
+        public int TemperatureC { get; set; }
+        public string? Summary { get; set; }
+        public int TemperatureF => 32 + (int)(TemperatureC / 0.5556);
+    }
+}

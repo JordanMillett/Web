@@ -1,0 +1,13 @@
+<div class="square">
+    <a href="/projects/@Title.ToLower()"><h1>@Title</h1></a>
+    <p>@Description</p>
+</div>
+
+@code 
+{ 
+    [Parameter]
+    public string Title { get; set; } = "Null";
+    [Parameter]
+    public string Description { get; set; } = "Missing.";
+
+}

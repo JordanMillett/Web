@@ -1,0 +1,202 @@
+@if (Ready)
+{
+    <h3><b>Translate this sentence</b></h3>
+    <br>
+    <div id="phrase"><h5>@Sentence</h5></div>
+    <hr>
+
+    <div id="top-words">
+        @if(Chosen.Count > 0)
+        {
+            @foreach (int index in Chosen)
+            {
+                <div class="word" @onclick="() => Toggle(index)">
+                    <p>@Words[index]</p>
+                </div>
+            }
+        }else
+        {
+            <div class="word hidden"><p>Hidden</p></div>
+        }
+    </div>
+    <hr><br>
+    <br>
+
+    <div id="bottom-words">
+        @foreach (int index in Indices)
+        {
+            <div class="word @(Chosen.Contains(index) ? "word-blank" : "")" @onclick="() => Toggle(index)">
+                <p>@Words[index]</p>
+            </div>
+        }
+    </div>
+
+    <div id="bottom-container">
+        <button class="button-fill @(Wrong ? "button-fill-wrong" : "")" @onclick="Check"><h6><b>CHECK</b></h6></button>
+    </div>
+}
+        
+@code
+{
+    [Parameter]
+    public bool Ready { get; set; }
+    [Parameter]
+    public EventCallback<bool> ReadyStateChanged { get; set; }
+
+    public string Sentence = "";
+    public string Translation = "";
+
+    public struct Pair
+    {
+        public string Sentence;
+        public string Translation;
+    }
+
+    public List<string> Words = new List<string>();
+    public List<int> Indices = new List<int>();
+
+    public List<int> Chosen = new List<int>();
+    public List<string> Mixed = new List<string>();
+
+    int Extra = 3;
+
+    public bool Wrong = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Delay(250);
+
+        Init();
+
+        await Task.Delay(250);
+        await ReadyStateChanged.InvokeAsync(true);
+
+    }
+
+    void Init()
+    {
+        Random Rand = new Random();
+        int Index = Rand.Next(0, Pairs.Count);
+
+        if (Rand.Next(2) == 1)
+        {
+            Sentence = Pairs[Index].Sentence;
+            Translation = Pairs[Index].Translation;
+        }else
+        {
+            Sentence = Pairs[Index].Translation;
+            Translation = Pairs[Index].Sentence;
+        }
+
+        Words = Translation.Split(' ').ToList();
+
+        List<int> OrderedIndices = new List<int>();
+        OrderedIndices.Clear();
+        Indices.Clear();
+        Chosen.Clear();
+
+        for (int i = 0; i < Extra; i++)
+        {
+            string Mixed = Mix[Rand.Next(0, Mix.Count)];
+            if (!Words.Contains(Mixed))
+                Words.Add(Mixed);
+            else
+                i--;
+        }
+
+        for (int i = 0; i < Words.Count; i++)
+            OrderedIndices.Add(i);
+
+        for (int i = 0; i < Words.Count; i++)
+        {
+            int selected = Rand.Next(0, OrderedIndices.Count);
+            Indices.Add(OrderedIndices[selected]);
+            OrderedIndices.RemoveAt(selected);
+        }
+    }
+
+    public async Task Check()
+    {
+        if (Wrong)
+            return;
+
+        //check if strings are same to see if right
+        /*
+        if (Chosen.Count != Words.Count - Extra)
+            Wrong = true;
+        */
+
+        string Answer = "";
+
+        foreach (int C in Chosen)
+        {
+            Answer += Words[C] + " ";
+        }
+
+        Answer = Answer.Remove(Answer.Length - 1, 1);
+
+        if(Answer != Translation)
+        {
+            Wrong = true;
+        }
+
+        if (!Wrong)
+        {
+            await ReadyStateChanged.InvokeAsync(false);
+            await Task.Delay(250);
+
+            Init();
+
+            await Task.Delay(250);
+            await ReadyStateChanged.InvokeAsync(true);
+        }else
+        {
+            await Task.Delay(1000);
+            Wrong = false;
+        }
+    }
+
+    void Toggle(int Index)
+    {
+        if(Chosen.Contains(Index))
+        {
+            Chosen.Remove(Index);
+        }else
+        {
+            Chosen.Add(Index);
+        }
+    }
+
+    public List<Pair> Pairs = new List<Pair>()
+    {
+        new Pair{
+            Sentence = "Everything is going well today", 
+            Translation = "Сегодня все идет хорошо"},
+        new Pair{
+            Sentence = "Good afternoon", 
+            Translation = "Добрый день"},
+        new Pair{
+            Sentence = "This is delicious", 
+            Translation = "Это очень вкусно"},
+        new Pair{
+            Sentence = "I live in that home", 
+            Translation = "Я живу в этом доме"},
+        new Pair{
+            Sentence = "I don't understand", 
+            Translation = "Я не понимаю"},
+        new Pair{
+            Sentence = "I don't speak Russian very well", 
+            Translation = "Я плохо говорю по-русски"},
+        new Pair{
+            Sentence = "Help me please", 
+            Translation = "Помогите мне пожалуйста"},
+        new Pair{
+            Sentence = "Two multiplied by two equals four", 
+            Translation = "Два умноженное на два равно четырем"},
+    };
+
+    public List<string> Mix = new List<string>()
+    {
+        "мне", "плохо", "доме", "очень", "равно", "все", "Это"
+    };
+}

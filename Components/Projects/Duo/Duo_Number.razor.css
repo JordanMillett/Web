@@ -1,0 +1,14 @@
+#choices
+{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+    width: 80%;
+}
+
+.word p
+{
+    text-align: center;
+}

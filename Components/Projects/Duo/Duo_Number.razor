@@ -1,0 +1,70 @@
+@if (Ready)
+{
+    <h3><b>Which number is this?</b></h3>
+    <br>
+    <div id="phrase"><h5>@Number</h5></div>
+    <hr>
+    
+    <br>
+    <br>
+    
+    <div id="choices">
+        @foreach (int choice in Choices)
+        {
+            <div class="word" @onclick="() => Check(choice)">
+                <p>@choice.ToString()</p>
+            </div>
+        }
+    </div>   
+}
+
+@code
+{
+    [Parameter]
+    public bool Ready { get; set; }
+    [Parameter]
+    public EventCallback<bool> ReadyStateChanged { get; set; }
+    
+    public string Number = "Шестнадцать";
+    public int Answer = 16;
+
+    public List<int> Choices = new List<int>();
+
+    protected override async Task OnInitializedAsync()
+    {
+        await Task.Delay(250);
+
+        Init();
+
+        await Task.Delay(250);
+        await ReadyStateChanged.InvokeAsync(true);
+
+    }
+
+    void Init()
+    {
+        Random Rand = new Random();
+        Choices.Clear();
+
+        for(int i = 0; i < 20; i++)
+        {
+            Choices.Add(Rand.Next(0, 100));
+        }
+
+        Choices.Add(Answer);
+    }
+
+    public async Task Check(int Chosen)
+    {
+        if(Chosen == Answer)
+        {
+            await ReadyStateChanged.InvokeAsync(false);
+            await Task.Delay(250);
+
+            Init();
+
+            await Task.Delay(250);
+            await ReadyStateChanged.InvokeAsync(true);
+        }
+    }
+}

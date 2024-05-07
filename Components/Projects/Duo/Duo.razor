@@ -1,0 +1,63 @@
+﻿@page "/projects/duo"
+@attribute [StreamRendering]
+
+@using Web.Components.Projects.Duo.Components
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito">
+<link rel="stylesheet" href="css/duo-shared.css">
+
+<PageTitle>Duo</PageTitle>
+
+<h1>@Title</h1>
+<p>@Description</p>
+
+<div id="buttons">
+    <button class="select" @onclick="() => SetGame(Game.Sentence)"><h6><b>Sentences</b></h6></button>
+    <button class="select" @onclick="() => SetGame(Game.Number)"><h6><b>Numbers</b></h6></button>
+</div>
+
+@Ready
+
+<div id="mobile-container">
+    <div id="mobile-screen">
+        
+        @if (Selected == Game.Sentence)
+        {
+            <Duo_Sentence Ready="@Ready" ReadyStateChanged="@ReadyStateChanged"/>
+        }
+        else
+        {
+            <Duo_Number Ready="@Ready" ReadyStateChanged="@ReadyStateChanged"/>
+        }
+            
+        @if (!@Ready)
+        {
+            <Spinner/>
+        }
+    </div>
+</div>
+
+@code
+{
+    public enum Game
+    {
+        Sentence,
+        Number
+    }
+
+    public Game Selected = Game.Sentence;
+
+    public static string Title = "Duo";
+    public static string Description = "Duo Games";
+    public bool Ready = false;
+
+    public void SetGame(Game Chosen)
+    {
+        Ready = false;
+        Selected = Chosen;
+    }
+
+    public void ReadyStateChanged(bool Current)
+    {
+        Ready = Current;
+    }
+}
