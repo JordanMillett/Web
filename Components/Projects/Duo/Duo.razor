@@ -10,12 +10,13 @@
 <h1>@Title</h1>
 <p>@Description</p>
 
+@Ready
+@Selected
+
 <div id="buttons">
     <button class="select" @onclick="() => SetGame(Game.Sentence)"><h6><b>Sentences</b></h6></button>
     <button class="select" @onclick="() => SetGame(Game.Number)"><h6><b>Numbers</b></h6></button>
 </div>
-
-@Ready
 
 <div id="mobile-container">
     <div id="mobile-screen">
@@ -52,8 +53,11 @@
 
     public void SetGame(Game Chosen)
     {
-        Ready = false;
-        Selected = Chosen;
+        if (Ready && Chosen != Selected)
+        {
+            Ready = false;
+            Selected = Chosen;
+        }
     }
 
     public void ReadyStateChanged(bool Current)
