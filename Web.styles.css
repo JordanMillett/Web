@@ -1,93 +1,5 @@
-/* /Components/Layout/MainLayout.razor.rz.scp.css */
-.page[b-s2i2o7u8yo]
-{
-    width: 100%;
-    margin-left: auto;
-    margin-right: auto;
-    padding-left: 50px;
-    padding-right: 50px;
-}
-    
-.content[b-s2i2o7u8yo] 
-{
-    background-color: #26081C;
-    width: 100%;
-    margin-left: auto;
-    margin-right: auto;
-    padding: 10px;
-    min-height: 1000px;
-}
-
-.nav[b-s2i2o7u8yo]
-{
-    padding-left: 10px;
-    background-color: #380036;
-    height: 50px;
-    display: flex;
-    align-items: center;
-}
-
-.nav a[b-s2i2o7u8yo]
-{
-    color:rgb(0, 208, 255);
-    text-decoration: none;
-}
-
-@media only screen and (max-width: 700px) 
-{
-    .page[b-s2i2o7u8yo] 
-    {
-        padding-left: 0px;
-        padding-right: 0px;
-    }
-}
-/* /Components/Layout/ProjectLink.razor.rz.scp.css */
-.square[b-4l25rdwlii]
-{
-    display:inline-block;
-    width: 150px;
-    padding: 10px;
-    margin: 10px;
-    height: 125px;
-    vertical-align: top;
-}
-
-a[b-4l25rdwlii]
-{
-    color:rgb(0, 208, 255);
-    text-decoration: none;
-}
-/* /Components/Projects/Duo/Components/Spinner.razor.rz.scp.css */
-/* Centers spinner */
-#spinner-container[b-9zdz37zv4r]
-{
-    top:50%;
-    transform: translateY(-50%);
-    position: relative;
-    max-width: fit-content;
-    margin-left: auto;
-    margin-right: auto;
-}
-
-/* Circle spinner */
-.spinner[b-9zdz37zv4r] 
-{
-    border: 10px solid #37464F;
-    border-top: 10px solid #70D700;
-    border-radius: 40px;
-    width: 70px;
-    height: 70px;
-    animation: spin-b-9zdz37zv4r 2s linear infinite;
-}
- 
-/* Spinner animation */
-@keyframes spin-b-9zdz37zv4r 
-{
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-}
-/* /Components/Projects/Duo/Duo.razor.rz.scp.css */
-.select[b-6cu7sr1jup]
+/* /Components/Games/Duo/Duo.razor.rz.scp.css */
+.select[b-d0e4tu9ej8]
 {
     width: 25%;
     height: 100%;
@@ -101,30 +13,30 @@ a[b-4l25rdwlii]
     border-radius: 15px;
 }
 
-.select > *[b-6cu7sr1jup]
+.select > *[b-d0e4tu9ej8]
 {
     color: #131F24;
     margin: 0;
     padding: 0;
 }
 
-#buttons[b-6cu7sr1jup]
+#buttons[b-d0e4tu9ej8]
 {
     margin-left: auto;
     margin-right: auto;
-    width: 500px;
+    width: 450px;
     margin-bottom: 5px;
 }
 
 @media only screen and (max-width: 700px) 
 {
-    #buttons[b-6cu7sr1jup]
+    #buttons[b-d0e4tu9ej8]
     {
         width: 100%;
     }
 }
-/* /Components/Projects/Duo/Duo_Number.razor.rz.scp.css */
-#choices[b-79ad6xu6tx]
+/* /Components/Games/Duo/Duo_Number.razor.rz.scp.css */
+#choices[b-b53tm770ci]
 {
     display: flex;
     flex-wrap: wrap;
@@ -134,18 +46,18 @@ a[b-4l25rdwlii]
     width: 80%;
 }
 
-.word p[b-79ad6xu6tx]
+.word p[b-b53tm770ci]
 {
     text-align: center;
 }
-/* /Components/Projects/Duo/Duo_Sentence.razor.rz.scp.css */
-#top-words[b-efa9oii258]
+/* /Components/Games/Duo/Duo_Sentence.razor.rz.scp.css */
+#top-words[b-mdcwjztkb2]
 {
     display: flex;
     flex-wrap: wrap;
 }
 
-#bottom-words[b-efa9oii258]
+#bottom-words[b-mdcwjztkb2]
 {
     display: flex;
     flex-wrap: wrap;
@@ -153,4 +65,93 @@ a[b-4l25rdwlii]
     margin-left: auto;
     margin-right: auto;
     width: 80%;
+}
+/* /Components/Games/Duo/Parts/Spinner.razor.rz.scp.css */
+/* Centers spinner */
+#spinner-container[b-m4divcdhv8]
+{
+    top:50%;
+    transform: translateY(-50%);
+    position: relative;
+    max-width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Circle spinner */
+.spinner[b-m4divcdhv8] 
+{
+    border: 10px solid #37464F;
+    border-top: 10px solid #70D700;
+    border-radius: 40px;
+    width: 70px;
+    height: 70px;
+    animation: spin-b-m4divcdhv8 2s linear infinite;
+}
+ 
+/* Spinner animation */
+@keyframes spin-b-m4divcdhv8 
+{
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+/* /Components/Main/Parts/ProjectLink.razor.rz.scp.css */
+.square[b-m5novhf61z]
+{
+    display:inline-block;
+    width: 150px;
+    padding: 10px;
+    margin: 10px;
+    height: 125px;
+    vertical-align: top;
+}
+
+a[b-m5novhf61z]
+{
+    color:rgb(0, 208, 255);
+    text-decoration: none;
+}
+/* /Components/Main/View.razor.rz.scp.css */
+.page[b-9ctxqimim3]
+{
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 50px;
+    padding-right: 50px;
+}
+    
+.content[b-9ctxqimim3] 
+{
+    background-color: #26081C;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 10px;
+    min-height: 1000px;
+}
+
+.nav[b-9ctxqimim3]
+{
+    padding-left: 10px;
+    background-color: #380036;
+    height: 50px;
+    display: flex;
+    align-items: center;
+}
+
+.nav a[b-9ctxqimim3]
+{
+    color:rgb(0, 208, 255);
+    text-decoration: none;
+    padding-right: 20px;
+}
+
+@media only screen and (max-width: 700px) 
+{
+    .page[b-9ctxqimim3] 
+    {
+        padding-left: 0px;
+        padding-right: 0px;
+    }
 }
