@@ -102,8 +102,8 @@
 
         int Index = Rand.Next(0, EN_Array.Length);
 
-        Sentence = EN_Array[Index];
-        Translation = RU_Array[Index];
+        Sentence = StripString(EN_Array[Index]);
+        Translation = StripString(RU_Array[Index]);
 
         //Console.WriteLine(Sentence);
         //Console.WriteLine(Sentence.Substring(0, Sentence.Length - 2));
@@ -111,11 +111,16 @@
         //Sentence = (Sentence[Sentence.Length] - 1 == ' ') ? Sentence.Substring(0, Sentence.Length - 2) : Sentence;
         //Translation = (Translation[Translation.Length] - 1 == ' ') ? Translation.Substring(0, Translation.Length - 2) : Translation;
 
-        Words = Translation.Split(' ').ToList();
+
 
         //for (int i = 0; i < Words.Count; i++)
-            //if (Words[i] == null)
-              //Words.RemoveAt(i);
+        //if (Words[i] == null)
+        //Words.RemoveAt(i);
+
+        //for (int i = 0; i < EN_Array.Length; i++)
+            //StripString(EN_Array[i]);
+
+        Words = Translation.Split(' ').ToList();
 
         List<int> OrderedIndices = new List<int>();
         OrderedIndices.Clear();
@@ -123,12 +128,12 @@
         Chosen.Clear();
         /*
         for (int i = 0; i < Extra; i++)
-        {
+            {
             string Mixed = Mix[Rand.Next(0, Mix.Count)];
             if (!Words.Contains(Mixed))
                 Words.Add(Mixed);
-            else
-                i--;
+        else
+        i--;
         }*/
 
         for (int i = 0; i < Words.Count; i++)
@@ -140,6 +145,31 @@
             Indices.Add(OrderedIndices[selected]);
             OrderedIndices.RemoveAt(selected);
         }
+    }
+
+    public string StripString(string Input)
+    {
+        Regex _punctuation = new Regex("[,.!?]+");
+        Regex _apostrophe = new Regex("[’]+");
+        Regex _uppercaseAloneI = new Regex("(\\si\\s)+");
+
+        //Console.WriteLine(Input);
+
+        string Output = _punctuation.Replace(Input, "");
+
+        Output = _apostrophe.Replace(Output, "'");
+
+        Output = Output.Trim();
+
+        Output = Output.ToLower();
+
+        Output = char.ToUpper(Output[0]) + Output.Substring(1);
+
+        Output = _uppercaseAloneI.Replace(Output, " I ");
+
+        //Console.WriteLine(Output);
+        //Console.WriteLine("");
+        return Output;
     }
 
     public async Task Check()
