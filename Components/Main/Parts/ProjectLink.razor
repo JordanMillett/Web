@@ -1,5 +1,5 @@
 <div class="square">
-    <a href="projects/@Title.ToLower()"><h1>@Title</h1></a>
+    <a href="@URL"><h1>@Title</h1></a>
     <p>@Description</p>
 </div>
 
@@ -9,5 +9,7 @@
     public string Title { get; set; } = "Null";
     [Parameter]
     public string Description { get; set; } = "Missing.";
+    [Parameter]
+    public string URL { get; set; } = "";
 
 }

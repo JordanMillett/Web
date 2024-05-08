@@ -1,6 +1,6 @@
-﻿@page "/projects/duo"
+﻿@page "/games/duo"
 
-@using Web.Components.Projects.Duo.Components
+@using Web.Components.Games.Duo.Parts
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito">
 <link rel="stylesheet" href="css/duo-shared.css">
 
@@ -8,9 +8,6 @@
 
 <h1>@Title</h1>
 <p>@Description</p>
-
-@Ready
-@Selected
 
 <div id="buttons">
     <button class="select" @onclick="() => SetGame(Game.Sentence)"><h6><b>Sentences</b></h6></button>
