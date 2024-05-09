@@ -60,19 +60,33 @@
     public List<int> Chosen = new List<int>();
     public List<string> Mixed = new List<string>();
 
-    int Extra = 3;
-
     public bool Wrong = false;
 
-    string EN = "";
-    string RU = "";
+    string EN_sentences = "";
+    string RU_sentences = "";
+    string EN_common = "";
+    string RU_common = "";
+
+    string[] EN_Array = new string[0];
+    string[] RU_Array = new string[0];
+
+    string[] EN_Randoms = new string[0];
+    string[] RU_Randoms = new string[0];
 
     protected override async Task OnInitializedAsync()
     {
         await Task.Delay(250);
 
-        EN = await Http.GetStringAsync("data/en_sentences.txt");
-        RU = await Http.GetStringAsync("data/ru_sentences.txt");
+        EN_sentences = await Http.GetStringAsync("data/en_sentences.txt");
+        RU_sentences = await Http.GetStringAsync("data/ru_sentences.txt");
+        EN_common = await Http.GetStringAsync("data/en_common.txt");
+        RU_common = await Http.GetStringAsync("data/ru_common.txt");
+
+        EN_Array = EN_sentences.Split(new string[] {"\n"}, StringSplitOptions.None);
+        RU_Array = RU_sentences.Split(new string[] {"\n"}, StringSplitOptions.None);
+
+        EN_Randoms = EN_common.Split(new string[] {"\n"}, StringSplitOptions.None);
+        RU_Randoms = RU_common.Split(new string[] {"\n"}, StringSplitOptions.None);
 
         Init();
 
@@ -84,57 +98,45 @@
     void Init()
     {
         Random Rand = new Random();
-        /*
-        int Index = Rand.Next(0, Pairs.Count);
-
-            if (Rand.Next(2) == 1)
-            {
-            Sentence = Pairs[Index].Sentence;
-            Translation = Pairs[Index].Translation;
-            }else
-            {
-            Sentence = Pairs[Index].Translation;
-            Translation = Pairs[Index].Sentence;
-        }*/
-
-        string[] EN_Array = EN.Split(new string[] {"\n"}, StringSplitOptions.None);
-        string[] RU_Array = RU.Split(new string[] {"\n"}, StringSplitOptions.None);
 
         int Index = Rand.Next(0, EN_Array.Length);
+        bool Flipped = Rand.Next(2) == 1;
 
-        Sentence = StripString(EN_Array[Index]);
-        Translation = StripString(RU_Array[Index]);
-
-        //Console.WriteLine(Sentence);
-        //Console.WriteLine(Sentence.Substring(0, Sentence.Length - 2));
-
-        //Sentence = (Sentence[Sentence.Length] - 1 == ' ') ? Sentence.Substring(0, Sentence.Length - 2) : Sentence;
-        //Translation = (Translation[Translation.Length] - 1 == ' ') ? Translation.Substring(0, Translation.Length - 2) : Translation;
-
-
-
-        //for (int i = 0; i < Words.Count; i++)
-        //if (Words[i] == null)
-        //Words.RemoveAt(i);
-
-        //for (int i = 0; i < EN_Array.Length; i++)
-            //StripString(EN_Array[i]);
+        if (Flipped)
+        {
+            Sentence = StripString(EN_Array[Index]);
+            Translation = StripString(RU_Array[Index]);
+        }else
+        {
+            Sentence = StripString(RU_Array[Index]);
+            Translation = StripString(EN_Array[Index]);
+        }
 
         Words = Translation.Split(' ').ToList();
+
+        int Extra = 0;
+        switch(Words.Count) 
+        {
+            case 1:  Extra = Rand.Next(1, 3);  break; //1 - 2
+            case 2:  Extra = Rand.Next(1, 3);  break; //1 - 2
+            case 3:  Extra = Rand.Next(1, 4);  break; //1 - 3
+            case 4:  Extra = Rand.Next(1, 4);  break; //1 - 3
+            case 5:  Extra = Rand.Next(1, 3);  break; //1 - 2
+            case 6:  Extra = Rand.Next(1, 3);  break; //1 - 2
+            case 7:  Extra = Rand.Next(1, 3);  break; //1 - 2
+            default: Extra = Rand.Next(0, 2);  break; //0 - 1
+        }
+
+        for (int i = 0; i < Extra; i++)
+            if(Flipped)
+                Words.Add(RU_Randoms[Rand.Next(0, RU_Randoms.Length)]);
+            else
+                Words.Add(EN_Randoms[Rand.Next(0, EN_Randoms.Length)]);
 
         List<int> OrderedIndices = new List<int>();
         OrderedIndices.Clear();
         Indices.Clear();
         Chosen.Clear();
-        /*
-        for (int i = 0; i < Extra; i++)
-            {
-            string Mixed = Mix[Rand.Next(0, Mix.Count)];
-            if (!Words.Contains(Mixed))
-                Words.Add(Mixed);
-        else
-        i--;
-        }*/
 
         for (int i = 0; i < Words.Count; i++)
             OrderedIndices.Add(i);
@@ -177,12 +179,6 @@
         if (Wrong)
             return;
 
-        //check if strings are same to see if right
-        /*
-        if (Chosen.Count != Words.Count - Extra)
-            Wrong = true;
-        */
-
         string Answer = "";
 
         foreach (int C in Chosen)
@@ -223,37 +219,4 @@
             Chosen.Add(Index);
         }
     }
-    /*
-    public List<Pair> Pairs = new List<Pair>()
-    {
-        new Pair{
-            Sentence = "Everything is going well today", 
-            Translation = "Сегодня все идет хорошо"},
-        new Pair{
-            Sentence = "Good afternoon", 
-            Translation = "Добрый день"},
-        new Pair{
-            Sentence = "This is delicious", 
-            Translation = "Это очень вкусно"},
-        new Pair{
-            Sentence = "I live in that home", 
-            Translation = "Я живу в этом доме"},
-        new Pair{
-            Sentence = "I don't understand", 
-            Translation = "Я не понимаю"},
-        new Pair{
-            Sentence = "I don't speak Russian very well", 
-            Translation = "Я плохо говорю по-русски"},
-        new Pair{
-            Sentence = "Help me please", 
-            Translation = "Помогите мне пожалуйста"},
-        new Pair{
-            Sentence = "Two multiplied by two equals four", 
-            Translation = "Два умноженное на два равно четырем"},
-    };*/
-
-    public List<string> Mix = new List<string>()
-    {
-        "мне", "плохо", "доме", "очень", "равно", "все", "Это"
-    };
 }
