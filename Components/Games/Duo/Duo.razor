@@ -12,6 +12,7 @@
 <div id="buttons">
     <button class="select" @onclick="() => SetGame(Game.Sentence)"><h6><b>Sentences</b></h6></button>
     <button class="select" @onclick="() => SetGame(Game.Number)"><h6><b>Numbers</b></h6></button>
+    <button class="select" @onclick="() => SetGame(Game.Match)"><h6><b>Match</b></h6></button>
 </div>
 
 <div id="mobile-container">
@@ -21,9 +22,12 @@
         {
             <Duo_Sentence Ready="@Ready" ReadyStateChanged="@ReadyStateChanged"/>
         }
-        else
+        else if(Selected == Game.Number)
         {
             <Duo_Number Ready="@Ready" ReadyStateChanged="@ReadyStateChanged"/>
+        }else
+        {
+            <Duo_Match Ready="@Ready" ReadyStateChanged="@ReadyStateChanged"/>
         }
             
         @if (!@Ready)
@@ -38,7 +42,8 @@
     public enum Game
     {
         Sentence,
-        Number
+        Number,
+        Match
     }
 
     public Game Selected = Game.Sentence;

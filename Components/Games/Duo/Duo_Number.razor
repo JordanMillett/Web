@@ -13,7 +13,7 @@
     <div id="choices">
         @foreach (int choice in Choices)
         {
-            <div class="word" @onclick="() => Check(choice)">
+            <div class="word  @(Wrong == choice ? "word-wrong" : "")" @onclick="() => Check(choice)">
                 <p>@choice.ToString()</p>
             </div>
         }
@@ -37,6 +37,8 @@
 
     public List<int> Choices = new List<int>();
 
+    public int Wrong = -1;
+
     protected override async Task OnInitializedAsync()
     {
         RU_numbers = await Http.GetStringAsync("data/ru_numbers.txt");
@@ -59,12 +61,16 @@
         Answer++;
 
         Number = char.ToUpper(Number[0]) + Number.Substring(1);
-        
+
         Choices.Add(Answer);
 
         for(int i = 0; i < 20; i++)
         {
-            Choices.Add(Rand.Next(0, RU_Array.Length));
+            int Filler = Rand.Next(0, RU_Array.Length);
+            if (!Choices.Contains(Filler))
+                Choices.Add(Filler);
+            else
+                i--;
         }
 
         Choices.Sort();
@@ -72,6 +78,9 @@
 
     public async Task Check(int Chosen)
     {
+        if (Wrong != -1)
+            return;
+
         if(Chosen == Answer)
         {
             await ReadyStateChanged.InvokeAsync(false);
@@ -79,6 +88,11 @@
             Init();
 
             await ReadyStateChanged.InvokeAsync(true);
+        }else
+        {
+            Wrong = Chosen;
+            await Task.Delay(1000);
+            Wrong = -1;
         }
     }
 }

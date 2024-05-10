@@ -1,0 +1,159 @@
+@inject HttpClient Http
+
+@if (Ready)
+{
+    <h3><b>Match the pairs</b></h3>
+    <br>
+    <br>
+    <br>
+    
+    <div id="choices-container">
+        <div id="choices" class="left">
+            @for (int i = 0; i < Indices.Count; i++)
+            {
+                int ID = i;
+                <div class="word @GetState(ID)" @onclick="() => Check(ID)">
+                    <p>@EN_Array[Indices[i]].ToString()</p>
+                </div>
+            }
+        </div>
+        <div id="choices" class="right">
+            @for (int i = 0; i < Indices.Count; i++)
+            {
+                int ID = i + 5;
+                <div class="word @GetState(ID)" @onclick="() => Check(ID)">
+                    <p>@RU_Array[Indices[i]].ToString()</p>
+                </div>
+            }
+        </div>
+    </div>   
+}
+
+@code
+{
+    [Parameter]
+    public bool Ready { get; set; }
+    [Parameter]
+    public EventCallback<bool> ReadyStateChanged { get; set; }
+
+    string EN_vocab = "";
+    string RU_vocab = "";
+
+    string[] EN_Array = new string[0];
+    string[] RU_Array = new string[0];
+
+    public List<int> Indices = new List<int>();
+
+    int Selected = -1;
+
+    public enum State
+    {
+        None,
+        Selected,
+        Correct,
+        Wrong,
+        Invisible
+    }
+
+    public State[] States = new State[10];
+
+    protected override async Task OnInitializedAsync()
+    {
+        EN_vocab = await Http.GetStringAsync("data/en_vocab.txt");
+        RU_vocab = await Http.GetStringAsync("data/ru_vocab.txt");
+
+        EN_Array = EN_vocab.Split(new string[] {"\n"}, StringSplitOptions.None);
+        RU_Array = RU_vocab.Split(new string[] {"\n"}, StringSplitOptions.None);
+
+        Init();
+
+        await ReadyStateChanged.InvokeAsync(true);
+
+    }
+
+    void Init()
+    {
+        Random Rand = new Random();
+        Indices.Clear();
+
+        for(int i = 0; i < 5; i++)
+        {
+            int Index = Rand.Next(0, EN_Array.Length);
+            if (!Indices.Contains(Index))
+                Indices.Add(Index);
+            else
+                i--;
+        }
+    }
+
+    string GetState(int Index)
+    {
+        //Console.WriteLine("Get State at : " + Index);
+
+        switch (States[Index])
+        {
+            case State.Correct:  return "word-correct";
+            case State.Wrong:  return "word-wrong";
+            case State.Selected:  return "word-selected";
+            case State.Invisible:  return "hidden";
+            default:  return "";
+        }
+    }
+
+    public async Task Check(int Chosen)
+    {
+        Console.WriteLine("Chosen: " + Chosen);
+
+        if(Selected == -1)
+        {
+            Selected = Chosen;
+            States[Selected] = State.Selected;
+            return;
+        }else
+        {
+            if (Selected == Chosen)
+            {
+                States[Selected] = State.None;
+                Selected = -1;
+            }
+            else
+            {
+                if ((Selected <= 4 && Chosen <= 4) || (Selected > 4 && Chosen > 4))
+                {
+                    States[Selected] = State.None;
+                    Selected = Chosen;
+                    States[Selected] = State.Selected;
+                }
+                else //check answer
+                {
+                    Console.WriteLine("First: " + Selected);
+                    Console.WriteLine("Second: " + Chosen);
+                    States[Selected] = State.Correct;
+                    States[Chosen] = State.Correct;
+                    Selected = -1;
+                }
+            }
+
+        }
+        
+        
+        
+        /*
+        if (Wrong != -1)
+            return;
+
+        if(Chosen == Answer)
+        {
+            await ReadyStateChanged.InvokeAsync(false);
+
+            Init();
+
+            await ReadyStateChanged.InvokeAsync(true);
+        }else
+        {
+            Wrong = Chosen;
+            await Task.Delay(1000);
+            Wrong = -1;
+        }*/
+    }
+}
