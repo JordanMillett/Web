@@ -35,6 +35,41 @@
         width: 100%;
     }
 }
+/* /Components/Games/Duo/Duo_Match.razor.rz.scp.css */
+#choices-container[b-jda62kkenw]
+{
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-left: auto;
+    margin-right: auto;
+    width: 85%;
+}
+
+#choices[b-jda62kkenw]
+{
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+.left[b-jda62kkenw]
+{
+    padding-right: 10px;
+}
+
+.right[b-jda62kkenw]
+{
+    padding-left: 10px;
+}
+
+.word[b-jda62kkenw]
+{
+    height: 60px;
+    padding-top: 16px;
+    margin-bottom: 15px;
+}
 /* /Components/Games/Duo/Duo_Number.razor.rz.scp.css */
 #choices[b-b53tm770ci]
 {
@@ -44,11 +79,6 @@
     margin-left: auto;
     margin-right: auto;
     width: 80%;
-}
-
-.word p[b-b53tm770ci]
-{
-    text-align: center;
 }
 /* /Components/Games/Duo/Duo_Sentence.razor.rz.scp.css */
 #top-words[b-mdcwjztkb2]

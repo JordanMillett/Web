@@ -68,10 +68,42 @@ hr
     cursor: pointer;
 }
 
+.word p
+{
+    text-align: center;
+}
+
 .word-blank
 {
     background-color: #37464F;
     color: #37464F;
+}
+
+.word-wrong
+{
+    font-weight: bold;
+    color: #DC605E;
+    background-color: #202F35;
+    border: 3px solid #DC605E;
+    border-bottom: 4px solid #DC605E;
+}
+
+.word-correct
+{
+    font-weight: bold;
+    color: #77B828;
+    background-color: #202F35;
+    border: 3px solid #77B828;
+    border-bottom: 4px solid #77B828;
+}
+
+.word-selected
+{
+    font-weight: bold;
+    color: #3F80A5;
+    background-color: #202F35;
+    border: 3px solid #3F80A5;
+    border-bottom: 4px solid #3F80A5;
 }
 
 #bottom-container
