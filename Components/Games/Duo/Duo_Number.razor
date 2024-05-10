@@ -1,3 +1,5 @@
+@inject HttpClient Http
+
 @if (Ready)
 {
     <h3><b>Which number is this?</b></h3>
@@ -24,19 +26,25 @@
     public bool Ready { get; set; }
     [Parameter]
     public EventCallback<bool> ReadyStateChanged { get; set; }
-    
-    public string Number = "Шестнадцать";
-    public int Answer = 16;
+
+    public string Number = "";
+    public int Answer = 0;
+
+    string RU_numbers = "";
+
+    string[] EN_Array = new string[0];
+    string[] RU_Array = new string[0];
 
     public List<int> Choices = new List<int>();
 
     protected override async Task OnInitializedAsync()
     {
-        await Task.Delay(250);
+        RU_numbers = await Http.GetStringAsync("data/ru_numbers.txt");
+
+        RU_Array = RU_numbers.Split(new string[] {"\n"}, StringSplitOptions.None);
 
         Init();
 
-        await Task.Delay(250);
         await ReadyStateChanged.InvokeAsync(true);
 
     }
@@ -46,12 +54,20 @@
         Random Rand = new Random();
         Choices.Clear();
 
+        Answer = Rand.Next(0, RU_Array.Length);
+        Number = RU_Array[Answer];
+        Answer++;
+
+        Number = char.ToUpper(Number[0]) + Number.Substring(1);
+        
+        Choices.Add(Answer);
+
         for(int i = 0; i < 20; i++)
         {
-            Choices.Add(Rand.Next(0, 100));
+            Choices.Add(Rand.Next(0, RU_Array.Length));
         }
 
-        Choices.Add(Answer);
+        Choices.Sort();
     }
 
     public async Task Check(int Chosen)
@@ -59,11 +75,9 @@
         if(Chosen == Answer)
         {
             await ReadyStateChanged.InvokeAsync(false);
-            await Task.Delay(250);
 
             Init();
 
-            await Task.Delay(250);
             await ReadyStateChanged.InvokeAsync(true);
         }
     }

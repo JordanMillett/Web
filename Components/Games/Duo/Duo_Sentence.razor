@@ -48,12 +48,6 @@
     public string Sentence = "";
     public string Translation = "";
 
-    public struct Pair
-    {
-        public string Sentence;
-        public string Translation;
-    }
-
     public List<string> Words = new List<string>();
     public List<int> Indices = new List<int>();
 
@@ -75,8 +69,6 @@
 
     protected override async Task OnInitializedAsync()
     {
-        await Task.Delay(250);
-
         EN_sentences = await Http.GetStringAsync("data/en_sentences.txt");
         RU_sentences = await Http.GetStringAsync("data/ru_sentences.txt");
         EN_common = await Http.GetStringAsync("data/en_common.txt");
@@ -90,7 +82,6 @@
 
         Init();
 
-        await Task.Delay(250);
         await ReadyStateChanged.InvokeAsync(true);
 
     }
@@ -196,11 +187,9 @@
         if (!Wrong)
         {
             await ReadyStateChanged.InvokeAsync(false);
-            await Task.Delay(250);
-
+   
             Init();
-
-            await Task.Delay(250);
+       
             await ReadyStateChanged.InvokeAsync(true);
         }else
         {
