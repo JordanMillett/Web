@@ -22,7 +22,7 @@
             {
                 int ID = i + 5;
                 <div class="word @GetState(ID)" @onclick="() => Check(ID)">
-                    <p>@RU_Array[Indices[i]].ToString()</p>
+                    <p>@RU_Array[Shuffle[i]].ToString()</p>
                 </div>
             }
         </div>
@@ -56,6 +56,7 @@
     }
 
     public State[] States = new State[10];
+    public List<int> Shuffle = new List<int>();
 
     protected override async Task OnInitializedAsync()
     {
@@ -72,9 +73,11 @@
     }
 
     void Init()
-    {
+    {        
         Random Rand = new Random();
         Indices.Clear();
+        Shuffle.Clear();
+        States = new State[10]; 
 
         for(int i = 0; i < 5; i++)
         {
@@ -83,6 +86,14 @@
                 Indices.Add(Index);
             else
                 i--;
+        }
+
+        List<int> OrderedIndices = new List<int>(Indices);
+        for(int i = 0; i < 5; i++)
+        {
+            int selected = Rand.Next(0, OrderedIndices.Count);
+            Shuffle.Add(OrderedIndices[selected]);
+            OrderedIndices.RemoveAt(selected);
         }
     }
 
@@ -102,35 +113,94 @@
 
     public async Task Check(int Chosen)
     {
-        Console.WriteLine("Chosen: " + Chosen);
+        if (States[Chosen] == State.Correct || States[Chosen] == State.Wrong || States[Chosen] == State.Invisible)
+            return;
 
-        if(Selected == -1)
+        //Console.WriteLine("Chosen: " + Chosen);
+
+        if(Selected == -1) //if nothing selected
         {
             Selected = Chosen;
             States[Selected] = State.Selected;
             return;
-        }else
+        }else            //if something selected
         {
-            if (Selected == Chosen)
+            if (Selected == Chosen)   //if selected object is selected again
             {
                 States[Selected] = State.None;
                 Selected = -1;
             }
-            else
+            else          //new second selection
             {
-                if ((Selected <= 4 && Chosen <= 4) || (Selected > 4 && Chosen > 4))
+                if ((Selected <= 4 && Chosen <= 4) || (Selected > 4 && Chosen > 4)) //if selection is on same side
                 {
                     States[Selected] = State.None;
                     Selected = Chosen;
                     States[Selected] = State.Selected;
                 }
-                else //check answer
+                else //if new selection is not on same side then check answer
                 {
-                    Console.WriteLine("First: " + Selected);
-                    Console.WriteLine("Second: " + Chosen);
-                    States[Selected] = State.Correct;
-                    States[Chosen] = State.Correct;
-                    Selected = -1;
+                    bool Correct = false;
+
+                    //Console.WriteLine("Index One: " + Selected);
+                    //Console.WriteLine("Index Two: " + Chosen);
+
+                    if(Selected < 5)
+                    {
+                        if (Indices[Selected] == Shuffle[Chosen - 5])
+                            Correct = true;
+                    }else
+                    {
+                        if (Shuffle[Selected - 5] == Indices[Chosen])
+                            Correct = true;
+                    }
+
+                    //int First = Selected >= 5 ? Selected - 5 : Selected;
+                    //int Second = Chosen >= 5 ? Chosen - 5 : Chosen;
+
+                    //Console.WriteLine("First: " + First);
+                    //Console.WriteLine("Second: " + Second);
+
+                    int IndexOne = Selected;
+                    int IndexTwo = Chosen;
+
+                    //Console.WriteLine(Indices[First]);
+                    //Console.WriteLine(Shuffle[Second]);
+
+                    if (Correct) //correct
+                    {
+
+                        States[IndexOne] = State.Correct;
+                        States[IndexTwo] = State.Correct;
+                        Selected = -1;
+
+                        await Task.Delay(500);
+
+                        States[IndexOne] = State.Invisible;
+                        States[IndexTwo] = State.Invisible;
+
+                        int Done = 0;
+                        foreach (State S in States)
+                        {
+                            if (S == State.Invisible)
+                                Done++;
+                        }
+
+                        if (Done == 10)
+                            Init();
+                            
+                            
+                    }else
+                    {
+                        States[Selected] = State.Wrong;
+                        States[Chosen] = State.Wrong;
+                        Selected = -1;
+                        
+                        await Task.Delay(500);
+                        
+                        States[IndexOne] = State.None;
+                        States[IndexTwo] = State.None;
+                    }
                 }
             }
 
