@@ -13,7 +13,7 @@
     <div id="choices">
         @foreach (int choice in Choices)
         {
-            <div class="word  @(Wrong == choice ? "word-wrong" : "")" @onclick="() => Check(choice)">
+            <div class="word  @(Wrong == choice ? "word-wrong" : "") @(Right == choice ? "word-correct" : "")" @onclick="() => Check(choice)">
                 <p>@choice.ToString()</p>
             </div>
         }
@@ -38,6 +38,7 @@
     public List<int> Choices = new List<int>();
 
     public int Wrong = -1;
+    public int Right = -1;
 
     protected override async Task OnInitializedAsync()
     {
@@ -81,8 +82,15 @@
         if (Wrong != -1)
             return;
 
+        if (Right != -1)
+            return;
+
         if(Chosen == Answer)
         {
+            Right = Chosen;
+            await Task.Delay(500);
+            Right = -1;
+
             await ReadyStateChanged.InvokeAsync(false);
 
             Init();
@@ -91,7 +99,7 @@
         }else
         {
             Wrong = Chosen;
-            await Task.Delay(1000);
+            await Task.Delay(500);
             Wrong = -1;
         }
     }
