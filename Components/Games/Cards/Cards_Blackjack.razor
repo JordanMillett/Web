@@ -1,0 +1,30 @@
+@if (Ready)
+{
+    <h3><b>Blackjack</b></h3>
+    <br>
+    <hr>
+    
+    <br>
+    <br>
+}
+
+@code
+{
+    [Parameter]
+    public bool Ready { get; set; }
+    [Parameter]
+    public EventCallback<bool> ReadyStateChanged { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Init();
+
+        await ReadyStateChanged.InvokeAsync(true);
+
+    }
+
+    void Init()
+    {
+       
+    }
+}

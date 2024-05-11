@@ -1,0 +1,56 @@
+@page "/games/cards"
+
+@using Web.Components.Games.Cards.Parts
+<link rel="stylesheet" href="css/cards-shared.css">
+
+<PageTitle>Cards</PageTitle>
+
+<h1>@Title</h1>
+<p>@Description</p>
+
+<div id="buttons">
+    <button class="select" @onclick="() => SetGame(Game.Blackjack)"><h6><b>Blackjack</b></h6></button>
+</div>
+
+<div id="screen-container">
+    <div id="screen">
+        
+        @if (Selected == Game.Blackjack)
+        {
+            <Cards_Blackjack Ready="@Ready" ReadyStateChanged="@ReadyStateChanged"/>
+        }
+            
+        @if (!@Ready)
+        {
+            <Loading/>
+        }
+    </div>
+</div>
+
+@code
+{
+    public enum Game
+    {
+        Blackjack,
+    }
+
+    public Game Selected = Game.Blackjack;
+
+    public static string Title = "Cards";
+    public static string Description = "Card Games";
+    public bool Ready = false;
+
+    public void SetGame(Game Chosen)
+    {
+        if (Ready && Chosen != Selected)
+        {
+            Ready = false;
+            Selected = Chosen;
+        }
+    }
+
+    public void ReadyStateChanged(bool Current)
+    {
+        Ready = Current;
+    }
+}
