@@ -1,3 +1,69 @@
+/* /Components/Games/Cards/Cards.razor.rz.scp.css */
+.select[b-2w7wmgvppt]
+{
+    width: 24.25%;
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: #93D334;
+    border-top: 0px;
+    border-left: 2px solid #77B828;
+    border-right: 2px solid #77B828;
+    border-bottom: 4px solid #77B828;
+    border-radius: 15px;
+}
+
+.select > *[b-2w7wmgvppt]
+{
+    color: #131F24;
+    margin: 0;
+    padding: 0;
+}
+
+#buttons[b-2w7wmgvppt]
+{
+    margin-left: auto;
+    margin-right: auto;
+    width: 1100px;
+    margin-bottom: 5px;
+}
+
+@media only screen and (max-width: 700px) 
+{
+    #buttons[b-2w7wmgvppt]
+    {
+        width: 100%;
+    }
+}
+/* /Components/Games/Cards/Parts/Loading.razor.rz.scp.css */
+/* Centers spinner */
+#spinner-container[b-kdmcryevgl]
+{
+    top:50%;
+    transform: translateY(-50%);
+    position: relative;
+    max-width: fit-content;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Circle spinner */
+.spinner[b-kdmcryevgl] 
+{
+    border: 10px solid #37464F;
+    border-top: 10px solid #70D700;
+    border-radius: 40px;
+    width: 70px;
+    height: 70px;
+    animation: spin-b-kdmcryevgl 2s linear infinite;
+}
+ 
+/* Spinner animation */
+@keyframes spin-b-kdmcryevgl 
+{
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
 /* /Components/Games/Duo/Duo.razor.rz.scp.css */
 .select[b-d0e4tu9ej8]
 {
