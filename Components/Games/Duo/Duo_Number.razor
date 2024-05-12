@@ -42,7 +42,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        RU_numbers = await Http.GetStringAsync("data/ru_numbers.txt");
+        RU_numbers = await Http.GetStringAsync("data/numbers/ru.txt");
 
         RU_Array = RU_numbers.Split(new string[] {"\n"}, StringSplitOptions.None);
 

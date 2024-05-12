@@ -1,4 +1,5 @@
 @inject HttpClient Http
+@inject SettingService Settings
 
 @if (Ready)
 {
@@ -60,8 +61,8 @@
 
     protected override async Task OnInitializedAsync()
     {
-        EN_vocab = await Http.GetStringAsync("data/en_vocab.txt");
-        RU_vocab = await Http.GetStringAsync("data/ru_vocab.txt");
+        EN_vocab = await Http.GetStringAsync("data/vocab/en_" + Settings.Vocab + ".txt");
+        RU_vocab = await Http.GetStringAsync("data/vocab/ru_" + Settings.Vocab + ".txt");
 
         EN_Array = EN_vocab.Split(new string[] {"\n"}, StringSplitOptions.None);
         RU_Array = RU_vocab.Split(new string[] {"\n"}, StringSplitOptions.None);
