@@ -1,12 +1,23 @@
+:root 
+{
+    --text_color: white;
+    --empty_color: #150811;
+    
+    --link_color: #00d0ff;
+    
+    --content_background: #26081C;
+    --nav_background: #380036;
+}
+
 html, body
 {
-    background-color: #150811;
-    color:white;
+    background-color: var(--empty_color);
+    color: var(--text_color);
 }
 
 ul, ol, td, th
 {
-    color:white;
+    color: var(--text_color);
 }
 
 h1:focus 

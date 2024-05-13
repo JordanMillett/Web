@@ -71,17 +71,17 @@
     height: 100%;
     margin: 0;
     padding: 0;
-    background-color: #93D334;
+    background-color: var(--duo_right);
     border-top: 0px;
-    border-left: 2px solid #77B828;
-    border-right: 2px solid #77B828;
-    border-bottom: 4px solid #77B828;
+    border-left: 2px solid var(--duo_right_secondary);
+    border-right: 2px solid var(--duo_right_secondary);
+    border-bottom: 4px solid var(--duo_right_secondary);
     border-radius: 15px;
 }
 
 .select > *[b-d0e4tu9ej8]
 {
-    color: #131F24;
+    color: var(--duo_background_color);
     margin: 0;
     padding: 0;
 }
@@ -177,8 +177,8 @@
 /* Circle spinner */
 .spinner[b-m4divcdhv8] 
 {
-    border: 10px solid #37464F;
-    border-top: 10px solid #70D700;
+    border: 10px solid var(--duo_secondary);
+    border-top: 10px solid var(--duo_right);
     border-radius: 40px;
     width: 70px;
     height: 70px;
@@ -204,7 +204,7 @@
 
 a[b-m5novhf61z]
 {
-    color:rgb(0, 208, 255);
+    color: var(--link_color);
     text-decoration: none;
 }
 /* /Components/Main/View.razor.rz.scp.css */
@@ -219,7 +219,7 @@ a[b-m5novhf61z]
     
 .content[b-9ctxqimim3] 
 {
-    background-color: #26081C;
+    background-color: var(--content_background);
     width: 100%;
     margin-left: auto;
     margin-right: auto;
@@ -230,7 +230,7 @@ a[b-m5novhf61z]
 .nav[b-9ctxqimim3]
 {
     padding-left: 10px;
-    background-color: #380036;
+    background-color: var(--nav_background);
     height: 50px;
     display: flex;
     align-items: center;
@@ -238,7 +238,7 @@ a[b-m5novhf61z]
 
 .nav a[b-9ctxqimim3]
 {
-    color:rgb(0, 208, 255);
+    color: var(--link_color);
     text-decoration: none;
     padding-right: 20px;
 }
