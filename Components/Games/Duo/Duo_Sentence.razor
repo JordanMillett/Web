@@ -70,6 +70,8 @@
 
     protected override async Task OnInitializedAsync()
     {
+        //await Task.Delay(10000);
+        
         EN_sentences = await Http.GetStringAsync("data/sentences/en_" + Settings.Sentences + ".txt");
         RU_sentences = await Http.GetStringAsync("data/sentences/ru_" + Settings.Sentences + ".txt");
         EN_common = await Http.GetStringAsync("data/common/en.txt");

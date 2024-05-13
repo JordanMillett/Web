@@ -1,13 +1,30 @@
 @page "/settings"
 @using Web.Components.Main.Parts
 @inject SettingService Settings
+@inject HttpClient Http
 
 <PageTitle>Settings</PageTitle>
 
-<p>Sentence Files: @Settings.Sentences</p>
-<p>Vocab Files: @Settings.Vocab</p>
+<p>Sentence Files: @Settings.Sentences - @(Math.Round(Sentence_Size/1000.0, 2))KB</p>
+<p>Vocab Files: @Settings.Vocab - @(Math.Round(Vocab_Size/1000.0, 2))KB</p>
 
 @code
 {
-    
+    int Sentence_Size = 0;
+    int Vocab_Size = 0;
+
+    protected override async Task OnInitializedAsync()
+    {
+        Byte[] Size;
+
+        Size = await Http.GetByteArrayAsync("data/sentences/en_" + Settings.Vocab + ".txt");
+        Sentence_Size = Size.Length;
+        Size = await Http.GetByteArrayAsync("data/sentences/ru_" + Settings.Vocab + ".txt");
+        Sentence_Size += Size.Length;
+
+        Size = await Http.GetByteArrayAsync("data/vocab/en_" + Settings.Vocab + ".txt");
+        Vocab_Size = Size.Length;
+        Size = await Http.GetByteArrayAsync("data/vocab/ru_" + Settings.Vocab + ".txt");
+        Vocab_Size += Size.Length;
+    }
 }

@@ -10,6 +10,6 @@
 
 a
 {
-    color:rgb(0, 208, 255);
+    color: var(--link_color);
     text-decoration: none;
 }
