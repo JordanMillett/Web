@@ -1,0 +1,34 @@
+@page "/examples/audio"
+
+<PageTitle>@Title</PageTitle>
+
+<h1>@Title</h1>
+<p>@Description</p>
+<!--
+<div class="card">
+    <div class="card-header">
+        <button @onclick=@(()=>hidden=!hidden)>@(hidden ? "Play" : "Stop")</button>
+
+    </div>
+    <div class="card-body">
+        @if (!hidden)
+        {
+            <audio autoplay controls><source src="audio/right.mp3" /></audio>
+        }
+        else
+        {
+            <audio controls muted><source src="audio/wrong.mp3" /></audio>
+        }
+    </div>
+</div>
+-->
+
+<audio autoplay><source src="audio/right.mp3" /></audio>
+
+@code
+{
+    public static string Title = "Audio";
+    public static string Description = "Testing audio playback";
+
+    bool hidden = false;
+}
