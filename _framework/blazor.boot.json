@@ -1,7 +1,7 @@
 {
   "mainAssemblyName": "Web",
   "resources": {
-    "hash": "sha256-mego9CVV4qGEN+C4pUB8qNmu/qkC9Zm9tq5mFX7DE3w=",
+    "hash": "sha256-wYKlHanu0KJTyZSTml96mcYlOuRD52KPTGyTv/5KzQc=",
     "jsModuleNative": {
       "dotnet.native.8.0.4.6vlmefabfv.js": "sha256-ju0+XWE0ihz554eKEj0HQ8Opa61xpbUIaX5/MNo8we4="
     },
@@ -23,7 +23,7 @@
       "Microsoft.Extensions.Configuration.Abstractions.wasm": "sha256-87sn2TYqgdZ95sXmavjKEzoEfMgHnYQ9LOvnMX+aZcI=",
       "Microsoft.Extensions.Configuration.Json.wasm": "sha256-Sxmy2ZS134URxbHEvdbS6NcQ3zXS7UWx/5ZPpwiW7FA=",
       "Microsoft.Extensions.Configuration.wasm": "sha256-jYqHUZ07UYWc8POk7xhas6xQYH7t1qoTcylqoDqncJk=",
-      "Microsoft.Extensions.DependencyInjection.Abstractions.wasm": "sha256-Q6Yhy+74Ao+9QtddrcQ0vjhvbm2rxNl7JVAtSduGoh0=",
+      "Microsoft.Extensions.DependencyInjection.Abstractions.wasm": "sha256-4GWmLCmSONvu+1WZhtv3W3jZMhPBIufl9KVjuWqVf1s=",
       "Microsoft.Extensions.DependencyInjection.wasm": "sha256-gg8xZqJsBBrrNEyUGzYqhL3sqkuZ4AHAvdTdL9nZ0S0=",
       "Microsoft.Extensions.Logging.Abstractions.wasm": "sha256-LcaPEaPNm7pFT9kZyDHfXsV4Z9cGFGu7KFdL3o3UQks=",
       "Microsoft.Extensions.Logging.wasm": "sha256-8BH+kQfjYuZWxprOICXJ4+tU0OdJOYDKN7G0S3zYYHI=",
@@ -44,11 +44,11 @@
       "System.Private.CoreLib.wasm": "sha256-qcis75Q3IF/eQRkJ5KAiUuwnn9nzegUfppCyld4hz7k=",
       "System.Private.Uri.wasm": "sha256-NJG7CdfapWZ8rh0uj+ySphRq229TS28HJSAyak4/VZg=",
       "System.Runtime.InteropServices.JavaScript.wasm": "sha256-ick0L8BMlN/DNWw0EnAnSMeYbiczX3ggoXkf5DDrCwc=",
-      "System.Runtime.wasm": "sha256-rDtvA3ny49AO4Um2FyhUmCRi2lnIKMbv1Y/XG+6EkMU=",
+      "System.Runtime.wasm": "sha256-6tiUf2dIBLPlLYdQbG6s4QfWul0a4Z22BP1mB/67J1o=",
       "System.Text.Encodings.Web.wasm": "sha256-r3ODjquYz1kv8rmEvFqbp3+c06aeq4b4whv1G4aX+to=",
       "System.Text.Json.wasm": "sha256-afloHyRbFvfJXuRQoF12ESLoyWUAGipfq+t1LsfjqZM=",
       "System.Text.RegularExpressions.wasm": "sha256-RC9aJPpKVzODLpn5CZMQV9j6RJA69k08st5AaTFjgC0=",
-      "Web.wasm": "sha256-MVvN8/fs6kp/qDafxksS6uANd22g4RydwnWIxK360lc="
+      "Web.wasm": "sha256-aLM9TUTlRvT+Ssrh9fz3uggmfudJZZmhR/GolPXMAxw="
     }
   },
   "cacheBootResources": true,
