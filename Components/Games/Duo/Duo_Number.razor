@@ -1,11 +1,12 @@
 @inject HttpClient Http
 @inject ITextToSpeechService TextToSpeech
+@inject IAudioPlayerService AudioPlayer
 
 @if (Ready)
 {
     <h3><b>Which number is this?</b></h3>
     <br>
-    <div id="phrase"><h5>@Number</h5></div>
+    <div id="phrase" @onclick="Speak"><h5>@Number</h5></div>
     <hr>
     
     <br>
@@ -80,7 +81,7 @@
     }
 
     public async Task Check(int Chosen)
-    {
+    { 
         if (Wrong != -1)
             return;
 
@@ -89,6 +90,8 @@
 
         if(Chosen == Answer)
         {
+            _ = AudioPlayer.Play("audio/right.mp3");
+            
             Right = Chosen;
             await Task.Delay(500);
             Right = -1;
@@ -100,9 +103,16 @@
             await ReadyStateChanged.InvokeAsync(true);
         }else
         {
+            _ = AudioPlayer.Play("audio/wrong.mp3");
+            
             Wrong = Chosen;
             await Task.Delay(500);
             Wrong = -1;
         }
+    }
+    
+    void Speak()
+    {
+        _ = TextToSpeech.Speak(Number, false);
     }
 }

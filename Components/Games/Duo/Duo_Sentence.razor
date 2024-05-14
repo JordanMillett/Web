@@ -1,12 +1,13 @@
 @inject HttpClient Http
 @inject SettingService Settings
 @inject ITextToSpeechService TextToSpeech
+@inject IAudioPlayerService AudioPlayer
 
 @if (Ready)
 {
     <h3><b>Translate this sentence</b></h3>
     <br>
-    <div id="phrase"><h5>@Sentence</h5></div>
+    <div id="phrase" @onclick="Speak"><h5>@Sentence</h5></div>
     <hr>
 
     <div id="top-words">
@@ -74,7 +75,7 @@
     protected override async Task OnInitializedAsync()
     {
         //await Task.Delay(10000);
-        
+
         EN_sentences = await Http.GetStringAsync("data/sentences/en_" + Settings.Sentences + ".txt");
         RU_sentences = await Http.GetStringAsync("data/sentences/ru_" + Settings.Sentences + ".txt");
         EN_common = await Http.GetStringAsync("data/common/en.txt");
@@ -109,7 +110,7 @@
             Sentence = StripString(RU_Array[Index]);
             Translation = StripString(EN_Array[Index]);
         }
-        
+
         _ = TextToSpeech.Speak(Sentence, Flipped);
 
         Words = Translation.Split(' ').ToList();
@@ -147,7 +148,7 @@
             Indices.Add(OrderedIndices[selected]);
             OrderedIndices.RemoveAt(selected);
         }
-    
+
     }
 
     public string StripString(string Input)
@@ -176,7 +177,7 @@
     }
 
     public async Task Check()
-    {
+    {   
         if (Wrong)
             return;
 
@@ -192,14 +193,20 @@
         if(Answer != Translation)
         {
             Wrong = true;
+            _ = AudioPlayer.Play("audio/wrong.mp3");
+        }else
+        {
+            _ = AudioPlayer.Play("audio/right.mp3");
         }
 
         if (!Wrong)
         {
+
+
             await ReadyStateChanged.InvokeAsync(false);
-   
+
             Init();
-       
+
             await ReadyStateChanged.InvokeAsync(true);
             //await TextToSpeech.Speak(Sentence, Flipped);
         }else
@@ -222,5 +229,10 @@
         }
         
         //await TextToSpeech.Speak(Words[Index], !Flipped);
+    }
+    
+    void Speak()
+    {
+        _ = TextToSpeech.Speak(Sentence, Flipped);
     }
 }

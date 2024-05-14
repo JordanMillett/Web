@@ -1,6 +1,7 @@
 @inject HttpClient Http
 @inject SettingService Settings
 @inject ITextToSpeechService TextToSpeech
+@inject IAudioPlayerService AudioPlayer
 
 @if (Ready)
 {
@@ -175,7 +176,7 @@
 
                     if (Correct) //correct
                     {
-
+                        _ = AudioPlayer.Play("audio/right.mp3");
                         States[IndexOne] = State.Correct;
                         States[IndexTwo] = State.Correct;
                         Selected = -1;
@@ -198,6 +199,7 @@
 
                     }else
                     {
+                        _ = AudioPlayer.Play("audio/wrong.mp3");
                         States[Selected] = State.Wrong;
                         States[Chosen] = State.Wrong;
                         Selected = -1;

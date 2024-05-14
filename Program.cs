@@ -10,6 +10,6 @@ builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.
 
 builder.Services.AddSingleton<SettingService>();
 builder.Services.AddScoped<ITextToSpeechService, TextToSpeechService>();
-//builder.Services.AddSingleton<TextToSpeechService>();
+builder.Services.AddScoped<IAudioPlayerService, AudioPlayerService>();
 
 await builder.Build().RunAsync();
