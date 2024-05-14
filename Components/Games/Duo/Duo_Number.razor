@@ -1,4 +1,5 @@
 @inject HttpClient Http
+@inject ITextToSpeechService TextToSpeech
 
 @if (Ready)
 {
@@ -62,6 +63,7 @@
         Answer++;
 
         Number = char.ToUpper(Number[0]) + Number.Substring(1);
+        _ = TextToSpeech.Speak(Number, false);
 
         Choices.Add(Answer);
 

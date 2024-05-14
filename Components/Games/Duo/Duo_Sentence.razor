@@ -1,5 +1,6 @@
 @inject HttpClient Http
 @inject SettingService Settings
+@inject ITextToSpeechService TextToSpeech
 
 @if (Ready)
 {
@@ -68,6 +69,8 @@
     string[] EN_Randoms = new string[0];
     string[] RU_Randoms = new string[0];
 
+    bool Flipped = false;
+
     protected override async Task OnInitializedAsync()
     {
         //await Task.Delay(10000);
@@ -86,6 +89,7 @@
         Init();
 
         await ReadyStateChanged.InvokeAsync(true);
+        //await TextToSpeech.Speak(Sentence, Flipped);
 
     }
 
@@ -94,7 +98,7 @@
         Random Rand = new Random();
 
         int Index = Rand.Next(0, EN_Array.Length);
-        bool Flipped = Rand.Next(2) == 1;
+        Flipped = Rand.Next(2) == 1;
 
         if (Flipped)
         {
@@ -105,6 +109,8 @@
             Sentence = StripString(RU_Array[Index]);
             Translation = StripString(EN_Array[Index]);
         }
+        
+        _ = TextToSpeech.Speak(Sentence, Flipped);
 
         Words = Translation.Split(' ').ToList();
 
@@ -141,6 +147,7 @@
             Indices.Add(OrderedIndices[selected]);
             OrderedIndices.RemoveAt(selected);
         }
+    
     }
 
     public string StripString(string Input)
@@ -194,6 +201,7 @@
             Init();
        
             await ReadyStateChanged.InvokeAsync(true);
+            //await TextToSpeech.Speak(Sentence, Flipped);
         }else
         {
             await Task.Delay(500);
@@ -202,7 +210,9 @@
     }
 
     void Toggle(int Index)
-    {
+    {   
+        _ = TextToSpeech.Speak(Words[Index], !Flipped);
+        
         if(Chosen.Contains(Index))
         {
             Chosen.Remove(Index);
@@ -210,5 +220,7 @@
         {
             Chosen.Add(Index);
         }
+        
+        //await TextToSpeech.Speak(Words[Index], !Flipped);
     }
 }

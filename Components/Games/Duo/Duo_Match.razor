@@ -1,5 +1,6 @@
 @inject HttpClient Http
 @inject SettingService Settings
+@inject ITextToSpeechService TextToSpeech
 
 @if (Ready)
 {
@@ -116,6 +117,11 @@
     {
         if (States[Chosen] == State.Correct || States[Chosen] == State.Wrong || States[Chosen] == State.Invisible)
             return;
+            
+        if(Chosen <= 4)
+            _ = TextToSpeech.Speak(EN_Array[Indices[Chosen]].ToString(), true);
+        else
+            _ = TextToSpeech.Speak(RU_Array[Shuffle[Chosen - 5]].ToString(), false);
 
         //Console.WriteLine("Chosen: " + Chosen);
 
@@ -123,7 +129,6 @@
         {
             Selected = Chosen;
             States[Selected] = State.Selected;
-            return;
         }else            //if something selected
         {
             if (Selected == Chosen)   //if selected object is selected again
@@ -189,19 +194,21 @@
 
                         if (Done == 10)
                             Init();
-                            
-                            
+
+
                     }else
                     {
                         States[Selected] = State.Wrong;
                         States[Chosen] = State.Wrong;
                         Selected = -1;
-                        
+
                         await Task.Delay(500);
-                        
+
                         States[IndexOne] = State.None;
                         States[IndexTwo] = State.None;
                     }
+
+                    return;
                 }
             }
 
