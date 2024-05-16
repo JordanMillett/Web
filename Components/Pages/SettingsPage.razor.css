@@ -1,6 +1,6 @@
 .option
 {
-    color: var(--link_color);
+    color: var(--text_color);
     text-decoration: none;
     cursor: pointer;
     user-select: none;
@@ -9,4 +9,5 @@
 .option-selected
 {
     font-weight: bold;
+    color: var(--link_color);
 }

@@ -48,13 +48,13 @@
     {
         @foreach (string s in Settings.Sentence_Options)
         {
-            <button class="select setting" @onclick="() => SetSetting(s)"><h6><b>@s</b></h6></button>
+            <button class="select setting" @onclick="() => SetSetting(s)"><h6><b>@Capitalize(s)</b></h6></button>
         }
     }else if (Selected == Game.Match)
     {
         @foreach (string s in Settings.Vocab_Options)
         {
-            <button class="select setting" @onclick="() => SetSetting(s)"><h6><b>@s</b></h6></button>
+            <button class="select setting" @onclick="() => SetSetting(s)"><h6><b>@Capitalize(s)</b></h6></button>
         }
     }
 </div>
@@ -112,5 +112,10 @@
         {
             Score++;
         }
+    }
+    
+    public string Capitalize(string Value)
+    {
+        return char.ToUpper(Value[0]) + Value.Substring(1);
     }
 }
