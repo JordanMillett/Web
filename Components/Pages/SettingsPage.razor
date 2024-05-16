@@ -5,26 +5,64 @@
 
 <PageTitle>Settings</PageTitle>
 
-<p>Sentence Files: @Settings.Sentences - @(Math.Round(Sentence_Size/1000.0, 2))KB</p>
-<p>Vocab Files: @Settings.Vocab - @(Math.Round(Vocab_Size/1000.0, 2))KB</p>
+<p>Sentence Files: <b>@Settings.Sentences</b> - @(Math.Round(Sentence_Size/1000.0, 2))KB</p>
+<p>Vocab Files: <b>@Settings.Vocab</b> - @(Math.Round(Vocab_Size/1000.0, 2))KB</p>
+
+<h5>Sentence Options</h5>
+@foreach (string s in Settings.Sentence_Options)
+{
+    <p class="option"><a @onclick="() => Select(true, s)">- @s</a></p>
+}
+
+<h5>Vocab Options</h5>
+@foreach (string s in Settings.Vocab_Options)
+{
+    <p class="option"><a @onclick="() => Select(false, s)">- @s</a></p>
+}
 
 @code
 {
     int Sentence_Size = 0;
     int Vocab_Size = 0;
 
+    bool Refreshing = false;
+
     protected override async Task OnInitializedAsync()
     {
+        await Refresh();
+    }
+
+    public async Task Refresh()
+    {
+        if (Refreshing)
+            return;
+        Refreshing = true;
+
         Byte[] Size;
 
-        Size = await Http.GetByteArrayAsync("data/sentences/en_" + Settings.Vocab + ".txt");
+        Size = await Http.GetByteArrayAsync("data/sentences/en_" + Settings.Sentences + ".txt");
         Sentence_Size = Size.Length;
-        Size = await Http.GetByteArrayAsync("data/sentences/ru_" + Settings.Vocab + ".txt");
+        Size = await Http.GetByteArrayAsync("data/sentences/ru_" + Settings.Sentences + ".txt");
         Sentence_Size += Size.Length;
 
         Size = await Http.GetByteArrayAsync("data/vocab/en_" + Settings.Vocab + ".txt");
         Vocab_Size = Size.Length;
         Size = await Http.GetByteArrayAsync("data/vocab/ru_" + Settings.Vocab + ".txt");
         Vocab_Size += Size.Length;
+
+        Refreshing = false;
+    }
+
+    public async Task Select(bool Sentence, string Value)
+    {
+        if(Sentence)
+        {
+            Settings.Sentences = Value;
+        }else
+        {
+            Settings.Vocab = Value;
+        }
+        
+        await Refresh();
     }
 }

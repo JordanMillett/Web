@@ -1,0 +1,6 @@
+.option
+{
+    color: var(--link_color);
+    text-decoration: none;
+    cursor: pointer;
+}
