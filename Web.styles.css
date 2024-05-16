@@ -67,7 +67,7 @@
 /* /Components/Games/Duo/Duo.razor.rz.scp.css */
 .select[b-d0e4tu9ej8]
 {
-    width: 24.25%;
+    width: 24%;
     height: 100%;
     margin: 0;
     padding: 0;
@@ -77,6 +77,10 @@
     border-right: 2px solid var(--duo_right_secondary);
     border-bottom: 4px solid var(--duo_right_secondary);
     border-radius: 15px;
+    
+    margin-left: 2px;
+    margin-right: 2px;
+    margin-bottom: 5px;
 }
 
 .select > *[b-d0e4tu9ej8]
@@ -86,11 +90,23 @@
     padding: 0;
 }
 
+.setting[b-d0e4tu9ej8]
+{
+    background-color: var(--duo_setting);
+    border-left: 2px solid var(--duo_setting_secondary);
+    border-right: 2px solid var(--duo_setting_secondary);
+    border-bottom: 4px solid var(--duo_setting_secondary);
+}
+
 #buttons[b-d0e4tu9ej8]
 {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
     margin-left: auto;
     margin-right: auto;
     width: 450px;
+    margin-top: 5px;
     margin-bottom: 5px;
 }
 
@@ -263,4 +279,10 @@ a[b-m5novhf61z]
     color: var(--link_color);
     text-decoration: none;
     cursor: pointer;
+    user-select: none;
+}
+
+.option-selected[b-o2crp7749s]
+{
+    font-weight: bold;
 }
