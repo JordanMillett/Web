@@ -276,7 +276,7 @@ a[b-m5novhf61z]
 /* /Components/Pages/SettingsPage.razor.rz.scp.css */
 .option[b-o2crp7749s]
 {
-    color: var(--link_color);
+    color: var(--text_color);
     text-decoration: none;
     cursor: pointer;
     user-select: none;
@@ -285,4 +285,5 @@ a[b-m5novhf61z]
 .option-selected[b-o2crp7749s]
 {
     font-weight: bold;
+    color: var(--link_color);
 }
