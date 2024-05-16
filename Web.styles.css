@@ -257,3 +257,10 @@ a[b-m5novhf61z]
         padding-right: 0px;
     }
 }
+/* /Components/Pages/SettingsPage.razor.rz.scp.css */
+.option[b-o2crp7749s]
+{
+    color: var(--link_color);
+    text-decoration: none;
+    cursor: pointer;
+}
