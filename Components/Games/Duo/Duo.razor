@@ -1,6 +1,7 @@
 ﻿@page "/games/duo"
 
 @using Web.Components.Games.Duo.Parts
+@inject SettingService Settings
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Nunito">
 <link rel="stylesheet" href="css/duo-shared.css">
 
@@ -8,6 +9,10 @@
 
 <h1>@Title</h1>
 <p>@Description</p>
+
+<div id="buttons">
+<h5 class="score">Current Score - @Score</h5>
+</div>
 
 <div id="buttons">
     <button class="select" @onclick="() => SetGame(Game.Sentence)"><h6><b>Sentences</b></h6></button>
@@ -20,14 +25,14 @@
         
         @if (Selected == Game.Sentence)
         {
-            <Duo_Sentence Ready="@Ready" ReadyStateChanged="@ReadyStateChanged"/>
+            <Duo_Sentence Ready="@Ready" ReadyStateChanged="@ReadyStateChanged" @key="Key" UpdateScore="@UpdateScore"/>
         }
         else if(Selected == Game.Number)
         {
-            <Duo_Number Ready="@Ready" ReadyStateChanged="@ReadyStateChanged"/>
+            <Duo_Number Ready="@Ready" ReadyStateChanged="@ReadyStateChanged" @key="Key" UpdateScore="@UpdateScore"/>
         }else
         {
-            <Duo_Match Ready="@Ready" ReadyStateChanged="@ReadyStateChanged"/>
+            <Duo_Match Ready="@Ready" ReadyStateChanged="@ReadyStateChanged" @key="Key" UpdateScore="@UpdateScore"/>
         }
             
         @if (!@Ready)
@@ -35,6 +40,23 @@
             <Spinner/>
         }
     </div>
+</div>
+
+
+<div id="buttons">
+    @if (Selected == Game.Sentence)
+    {
+        @foreach (string s in Settings.Sentence_Options)
+        {
+            <button class="select setting" @onclick="() => SetSetting(s)"><h6><b>@s</b></h6></button>
+        }
+    }else if (Selected == Game.Match)
+    {
+        @foreach (string s in Settings.Vocab_Options)
+        {
+            <button class="select setting" @onclick="() => SetSetting(s)"><h6><b>@s</b></h6></button>
+        }
+    }
 </div>
 
 @code
@@ -51,18 +73,44 @@
     public static string Title = "Duo";
     public static string Description = "Duo Games";
     public bool Ready = false;
+    object Key = new object();
+    public int Score = 0;
 
     public void SetGame(Game Chosen)
     {
-        if (Ready && Chosen != Selected)
+        if (Ready)
         {
+            Score = 0;
             Ready = false;
             Selected = Chosen;
+            Key = new object();
         }
     }
 
     public void ReadyStateChanged(bool Current)
     {
         Ready = Current;
+    }
+
+    public void SetSetting(string Value)
+    {
+        switch (Selected)
+        {
+            case Game.Sentence: Settings.Sentences = Value; break;
+            case Game.Match: Settings.Vocab = Value; break;
+        }
+
+        SetGame(Selected);
+    }
+
+    public void UpdateScore(bool Reset)
+    {
+        if(Reset)
+        {
+            Score = 0;
+        }else
+        {
+            Score++;
+        }
     }
 }

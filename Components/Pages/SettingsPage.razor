@@ -5,20 +5,26 @@
 
 <PageTitle>Settings</PageTitle>
 
-<p>Sentence Files: <b>@Settings.Sentences</b> - @(Math.Round(Sentence_Size/1000.0, 2))KB</p>
-<p>Vocab Files: <b>@Settings.Vocab</b> - @(Math.Round(Vocab_Size/1000.0, 2))KB</p>
+<p>Sentence File Size: @(Math.Round(Sentence_Size/1000.0, 2))KB</p>
+<p>Vocab File Size: @(Math.Round(Vocab_Size/1000.0, 2))KB</p>
 
 <h5>Sentence Options</h5>
 @foreach (string s in Settings.Sentence_Options)
 {
-    <p class="option"><a @onclick="() => Select(true, s)">- @s</a></p>
+    <p class="option @(s == Settings.Sentences ? "option-selected" : "")"><a @onclick="() => Select(true, s)">- @s</a></p>
+    
 }
 
 <h5>Vocab Options</h5>
 @foreach (string s in Settings.Vocab_Options)
 {
-    <p class="option"><a @onclick="() => Select(false, s)">- @s</a></p>
+    <p class="option @(s == Settings.Vocab ? "option-selected" : "")"><a @onclick="() => Select(false, s)">- @s</a></p>
 }
+
+<h5>Spoken English</h5>
+<p class="option @(Settings.SpokenEnglish ? "option-selected" : "")"><a @onclick="() => SetSpokenEnglish(true)">- On</a></p>
+<p class="option @(!Settings.SpokenEnglish ? "option-selected" : "")"><a @onclick="() => SetSpokenEnglish(false)">- Off</a></p>
+
 
 @code
 {
@@ -62,7 +68,12 @@
         {
             Settings.Vocab = Value;
         }
-        
+
         await Refresh();
+    }
+
+    public void SetSpokenEnglish(bool Value)
+    {
+        Settings.SpokenEnglish = Value;
     }
 }

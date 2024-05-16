@@ -1,3 +1,5 @@
+@inherits Duo_Game;
+
 @inject HttpClient Http
 @inject ITextToSpeechService TextToSpeech
 @inject IAudioPlayerService AudioPlayer
@@ -24,11 +26,6 @@
 
 @code
 {
-    [Parameter]
-    public bool Ready { get; set; }
-    [Parameter]
-    public EventCallback<bool> ReadyStateChanged { get; set; }
-
     public string Number = "";
     public int Answer = 0;
 
@@ -90,6 +87,7 @@
 
         if(Chosen == Answer)
         {
+            await UpdateScore.InvokeAsync(false);
             _ = AudioPlayer.Play("audio/right.mp3");
             
             Right = Chosen;
@@ -103,6 +101,7 @@
             await ReadyStateChanged.InvokeAsync(true);
         }else
         {
+            await UpdateScore.InvokeAsync(true);
             _ = AudioPlayer.Play("audio/wrong.mp3");
             
             Wrong = Chosen;

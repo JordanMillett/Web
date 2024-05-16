@@ -1,3 +1,5 @@
+@inherits Duo_Game;
+
 @inject HttpClient Http
 @inject SettingService Settings
 @inject ITextToSpeechService TextToSpeech
@@ -34,11 +36,6 @@
 
 @code
 {
-    [Parameter]
-    public bool Ready { get; set; }
-    [Parameter]
-    public EventCallback<bool> ReadyStateChanged { get; set; }
-
     string EN_vocab = "";
     string RU_vocab = "";
 
@@ -118,7 +115,7 @@
     {
         if (States[Chosen] == State.Correct || States[Chosen] == State.Wrong || States[Chosen] == State.Invisible)
             return;
-            
+
         if(Chosen <= 4)
             _ = TextToSpeech.Speak(EN_Array[Indices[Chosen]].ToString(), true);
         else
@@ -176,6 +173,7 @@
 
                     if (Correct) //correct
                     {
+                        await UpdateScore.InvokeAsync(false);
                         _ = AudioPlayer.Play("audio/right.mp3");
                         States[IndexOne] = State.Correct;
                         States[IndexTwo] = State.Correct;
@@ -199,6 +197,7 @@
 
                     }else
                     {
+                        await UpdateScore.InvokeAsync(true);
                         _ = AudioPlayer.Play("audio/wrong.mp3");
                         States[Selected] = State.Wrong;
                         States[Chosen] = State.Wrong;
@@ -215,25 +214,5 @@
             }
 
         }
-        
-        
-        
-        /*
-        if (Wrong != -1)
-            return;
-
-        if(Chosen == Answer)
-        {
-            await ReadyStateChanged.InvokeAsync(false);
-
-            Init();
-
-            await ReadyStateChanged.InvokeAsync(true);
-        }else
-        {
-            Wrong = Chosen;
-            await Task.Delay(1000);
-            Wrong = -1;
-        }*/
     }
 }

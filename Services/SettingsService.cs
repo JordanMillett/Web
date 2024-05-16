@@ -2,18 +2,19 @@ namespace Web
 {
     public partial class SettingService
     {
-        public string Sentences = "easy";
-        public string Vocab = "hard";
+        public string Sentences = "Easy";
+        public string Vocab = "Hard";
+        public bool SpokenEnglish = false;
 
         public List<string> Sentence_Options = new List<string>()
         {
-            "easy",
+            "Easy",
         };
         
         public List<string> Vocab_Options = new List<string>()
         {
-            "easy",
-            "hard",
+            "Easy",
+            "Hard",
         };
         
         public SettingService()

@@ -1,0 +1,30 @@
+@code
+{
+    [Parameter]
+    public bool Ready { get; set; }
+    [Parameter]
+    public EventCallback<bool> ReadyStateChanged { get; set; }
+    [Parameter]
+    public EventCallback<bool> UpdateScore { get; set; }
+
+    public string StripString(string Input)
+    {
+        Regex _punctuation = new Regex("[,.!?]+");
+        Regex _apostrophe = new Regex("[’]+");
+        Regex _uppercaseAloneI = new Regex("(\\si\\s)+");
+
+        string Output = _punctuation.Replace(Input, "");
+
+        Output = _apostrophe.Replace(Output, "'");
+
+        Output = Output.Trim();
+
+        Output = Output.ToLower();
+
+        Output = char.ToUpper(Output[0]) + Output.Substring(1);
+
+        Output = _uppercaseAloneI.Replace(Output, " I ");
+
+        return Output;
+    }
+}

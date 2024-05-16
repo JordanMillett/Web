@@ -12,6 +12,9 @@
     
     --duo_selected: #3f85a7;
     --duo_highlight_background_color: #202f36;
+    
+    --duo_setting: #ffc700;
+    --duo_setting_secondary: #e7a601;
 }
 
 /* Resizable container */

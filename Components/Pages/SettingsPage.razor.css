@@ -3,4 +3,10 @@
     color: var(--link_color);
     text-decoration: none;
     cursor: pointer;
+    user-select: none;
+}
+
+.option-selected
+{
+    font-weight: bold;
 }

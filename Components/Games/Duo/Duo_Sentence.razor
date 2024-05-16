@@ -1,3 +1,5 @@
+@inherits Duo_Game;
+
 @inject HttpClient Http
 @inject SettingService Settings
 @inject ITextToSpeechService TextToSpeech
@@ -43,11 +45,6 @@
         
 @code
 {
-    [Parameter]
-    public bool Ready { get; set; }
-    [Parameter]
-    public EventCallback<bool> ReadyStateChanged { get; set; }
-
     public string Sentence = "";
     public string Translation = "";
 
@@ -151,33 +148,11 @@
 
     }
 
-    public string StripString(string Input)
-    {
-        Regex _punctuation = new Regex("[,.!?]+");
-        Regex _apostrophe = new Regex("[’]+");
-        Regex _uppercaseAloneI = new Regex("(\\si\\s)+");
-
-        //Console.WriteLine(Input);
-
-        string Output = _punctuation.Replace(Input, "");
-
-        Output = _apostrophe.Replace(Output, "'");
-
-        Output = Output.Trim();
-
-        Output = Output.ToLower();
-
-        Output = char.ToUpper(Output[0]) + Output.Substring(1);
-
-        Output = _uppercaseAloneI.Replace(Output, " I ");
-
-        //Console.WriteLine(Output);
-        //Console.WriteLine("");
-        return Output;
-    }
-
     public async Task Check()
-    {   
+    {
+        if (Chosen.Count == 0)
+            return;
+
         if (Wrong)
             return;
 
@@ -192,10 +167,12 @@
 
         if(Answer != Translation)
         {
+            await UpdateScore.InvokeAsync(true);
             Wrong = true;
             _ = AudioPlayer.Play("audio/wrong.mp3");
         }else
         {
+            await UpdateScore.InvokeAsync(false);
             _ = AudioPlayer.Play("audio/right.mp3");
         }
 

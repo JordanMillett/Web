@@ -1,6 +1,6 @@
 ﻿.select
 {
-    width: 24.25%;
+    width: 24%;
     height: 100%;
     margin: 0;
     padding: 0;
@@ -10,6 +10,10 @@
     border-right: 2px solid var(--duo_right_secondary);
     border-bottom: 4px solid var(--duo_right_secondary);
     border-radius: 15px;
+    
+    margin-left: 2px;
+    margin-right: 2px;
+    margin-bottom: 5px;
 }
 
 .select > *
@@ -19,11 +23,23 @@
     padding: 0;
 }
 
+.setting
+{
+    background-color: var(--duo_setting);
+    border-left: 2px solid var(--duo_setting_secondary);
+    border-right: 2px solid var(--duo_setting_secondary);
+    border-bottom: 4px solid var(--duo_setting_secondary);
+}
+
 #buttons
 {
+    display: flex;
+    justify-content: flex-start;
+    flex-wrap: wrap;
     margin-left: auto;
     margin-right: auto;
     width: 450px;
+    margin-top: 5px;
     margin-bottom: 5px;
 }
 
