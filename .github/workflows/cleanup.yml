@@ -1,9 +1,5 @@
 name: Cleanup Deployment History
 
-on:
-  push:
-    branches: [ main ]
-
 jobs:
   cleanup:
     runs-on: ubuntu-latest
