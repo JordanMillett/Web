@@ -15,6 +15,7 @@ namespace Web
         {
             "easy",
             "hard",
+            "test"
         };
         
         public SettingService()
