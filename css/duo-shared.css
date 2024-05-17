@@ -92,6 +92,7 @@ hr
 .word p
 {
     text-align: center;
+    font-size: min(1rem, 3.8vw);
 }
 
 .word-blank
